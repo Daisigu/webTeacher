@@ -4,14 +4,16 @@
       <div class="flex-wrapper">
         <div>
           <span>
-            
             <NuxtLink to="/">Главная </NuxtLink>
           </span>
           role: {{ authStore.role }}
         </div>
 
         <div>
-          <span v-if="authStore.isAuth">
+          <span v-if="authStore.role == 'student'">
+            <NuxtLink to="/student-profile">Личный кабинет </NuxtLink>
+          </span>
+          <span v-if="authStore.role == 'teacher'">
             <NuxtLink to="/student-profile">Личный кабинет </NuxtLink>
           </span>
           <span v-if="!authStore.isAuth">
@@ -63,10 +65,10 @@ const logout = () => {
   margin-right: 1rem;
   color: white;
 }
-a{
-    color: white;
+a {
+  color: white;
 }
-a:hover{
-    color: rgb(137, 137, 137);
+a:hover {
+  color: rgb(137, 137, 137);
 }
 </style>

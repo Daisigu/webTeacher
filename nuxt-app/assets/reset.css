@@ -9,3 +9,10 @@
   list-style: none;
   font-family: "Rubik", sans-serif;
 }
+section {
+  margin-top: 2rem;
+}
+.page-title {
+  font-size: 30px;
+  margin-bottom: 3rem;
+}
