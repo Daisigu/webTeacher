@@ -31,11 +31,11 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "~~/store/useAuth";
-const authStore = useAuthStore();
+import { useLoginStore } from "~~/store/login";
+const authStore = useLoginStore();
 const auth_token = useCookie("auth_token");
 const router = useRouter();
-const { setLoggedIn } = useAuthStore();
+const { setLoggedIn } = useLoginStore();
 const logout = () => {
   authStore.setLoggedOut();
   router.push("/login");

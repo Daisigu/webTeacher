@@ -3,15 +3,16 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "~~/store/useAuth";
+import { useLoginStore } from "~~/store/login";
 
 const router = useRouter();
-const authStore = useAuthStore();
+const loginStore = useLoginStore();
 onMounted(() => {
   nextTick(() => {
-    authStore.role == "teacher" ? router.push("/teacher-cabinet") : 0;
+    loginStore.role == "teacher" ? router.push("/teacher-cabinet") : 0;
   });
 });
 </script>
 
-<style  scoped></style>
+<style scoped></style>
+

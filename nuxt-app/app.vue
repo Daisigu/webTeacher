@@ -6,6 +6,6 @@
   </div>
 </template>
 <script setup>
-import { useAuthStore } from "~~/store/useAuth";
-const authStore = useAuthStore();
+import { useLoginStore } from "~~/store/login";
+const authStore = useLoginStore();
 </script>

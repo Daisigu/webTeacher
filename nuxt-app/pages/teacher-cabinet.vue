@@ -12,6 +12,7 @@
         <div
           :class="{ active: student.id == pickedStudent.id }"
           class="students-item"
+          :key="student.id"
           v-for="student in students"
           @click="pickStudent(student)"
         >
@@ -28,7 +29,7 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "~~/store/useAuth";
+import { useLoginStore } from "~~/store/login";
 
 const courses = [
   {
@@ -88,7 +89,7 @@ const students = ref([
 ]);
 const pickedStudent = ref({});
 const router = useRouter();
-const authStore = useAuthStore();
+const authStore = useLoginStore();
 const pickStudent = (student) => {
   if (student.id == pickedStudent.value.id) {
     pickedStudent.value = "";

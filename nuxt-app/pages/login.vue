@@ -1,43 +1,69 @@
 <template>
   <div class="login container" @click="test">
     <div class="login-content col">
-      <form
-        @input="errors = ''"
-        @submit.prevent="login"
-        class="login-form col-lg-3 col-sm-12"
-      >
-        <a-input
-          class="xl"
-          v-model:value="loginForm.login"
-          type="login"
-          required
-          placeholder="Логин"
-        />
-        <a-input
-          class="xl"
-          v-model:value="loginForm.password"
-          type="password"
-          required
-          placeholder="Пароль"
-        />
-        <a-button class="col-12" @click="login" type="primary">Войти</a-button>
-      </form>
+      <a-form class="col-xl-3">
+        <a-form-item v-bind="validateInfos.login">
+          <a-input placeholder="Логин" v-model:value="loginForm.login" />
+        </a-form-item>
+        <a-form-item v-bind="validateInfos.password">
+          <a-input placeholder="Пароль" v-model:value="loginForm.password" />
+        </a-form-item>
+        <a-form-item>
+          <a-button
+            :disabled="!loginFormIsValid"
+            class="col-12"
+            type="primary"
+            @click.prevent="login"
+            >Войти</a-button
+          >
+        </a-form-item>
+      </a-form>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useAuthStore } from "~~/store/useAuth";
+import { useLoginStore } from "~~/store/login";
 const router = useRouter();
-const { setLoggedIn, setTeacherLoggedIn } = useAuthStore();
+import { Form } from "ant-design-vue";
+
+const useForm = Form.useForm;
+const { setLoggedIn, setTeacherLoggedIn } = useLoginStore();
 const auth_token = useCookie("auth_token");
 const loginForm = reactive({
-  login: "Bogd228",
-  password: "1",
+  login: "",
+  password: "",
 });
 const loading = reactive({
   login: false,
 });
+const loginFormIsValid = ref(false);
+const { resetFields, validate, validateInfos } = useForm(
+  loginForm,
+  reactive({
+    login: [
+      {
+        required: true,
+        message: "Пожалуйста, введите логин",
+      },
+    ],
+    password: [
+      {
+        required: true,
+        message: "Пожалуйста, введите пароль",
+      },
+    ],
+  })
+);
+
+const loginValidate = async () => {
+  try {
+    await validate();
+    loginFormIsValid.value = true;
+  } catch (e) {
+    loginFormIsValid.value = false;
+  }
+};
 const login = async () => {
   if (loginForm.login === "Bogd228") {
     setTeacherLoggedIn();
